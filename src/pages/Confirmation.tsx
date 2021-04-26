@@ -1,15 +1,30 @@
-import React, { useContext } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useNavigation } from '@react-navigation/core'
 import { Text, SafeAreaView, View, StyleSheet } from 'react-native'
 
 import { Button } from '../components/Button'
 
-import { GlobalContext } from '../contexts/GlobalContext'
-
 import colors from '../styles/colors'
 import fonts from '../styles/fonts'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export function Confirmation() {
-	const { userName } = useContext(GlobalContext)
+	const { navigate } = useNavigation()
+
+	const [userName, setUserName] = useState('')
+
+	useEffect(() => {
+		async function loadStoredUserName() {
+			const user = await AsyncStorage.getItem('@plantmanager:user')
+			setUserName(user || '')
+		}
+
+		loadStoredUserName()
+	}, [])
+
+	function handleMoveOn() {
+		navigate('PlantSelect')
+	}
 
 	return (
 		<SafeAreaView style={styles.container}>
@@ -27,7 +42,10 @@ export function Confirmation() {
 				</Text>
 
 				<View style={styles.footer}>
-					<Button text="OK" />
+					<Button 
+						text="Começar" 
+						onPress={handleMoveOn} 
+					/>
 				</View>
 			</View>
 		</SafeAreaView>
