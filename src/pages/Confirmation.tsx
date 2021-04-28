@@ -1,49 +1,55 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/core'
+import React from 'react'
+import { useNavigation, useRoute } from '@react-navigation/core'
 import { Text, SafeAreaView, View, StyleSheet } from 'react-native'
 
 import { Button } from '../components/Button'
 
 import colors from '../styles/colors'
 import fonts from '../styles/fonts'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+
+interface Params {
+	title: string,
+	subtitle: string,
+	buttonText: string,
+	icon: '😁' | '😁',
+	nextScreen: string
+}
 
 export function Confirmation() {
 	const { navigate } = useNavigation()
 
-	const [userName, setUserName] = useState('')
+	const routes = useRoute()
 
-	useEffect(() => {
-		async function loadStoredUserName() {
-			const user = await AsyncStorage.getItem('@plantmanager:user')
-			setUserName(user || '')
-		}
-
-		loadStoredUserName()
-	}, [])
+	const {
+		title,
+		subtitle,
+		buttonText,
+		nextScreen,
+		icon
+	} = routes.params as Params
 
 	function handleMoveOn() {
-		navigate('PlantSelect')
+		navigate(nextScreen)
 	}
 
 	return (
 		<SafeAreaView style={styles.container}>
 			<View style={styles.content}>
 				<Text style={styles.emoji}>
-					😁
+					{icon}
 				</Text>
 
 				<Text style={styles.title}>
-					Prontinho, {userName}!
+					{title}
 				</Text>
 
 				<Text style={styles.subtitle}>
-					Agora vamos começar a cuidar das suas plantinhas com muito cuidado.
+					{subtitle}
 				</Text>
 
 				<View style={styles.footer}>
 					<Button 
-						text="Começar" 
+						text={buttonText}
 						onPress={handleMoveOn} 
 					/>
 				</View>

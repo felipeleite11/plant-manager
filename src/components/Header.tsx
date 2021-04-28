@@ -6,10 +6,12 @@ import colors from '../styles/colors'
 import fonts from '../styles/fonts'
 
 interface HeaderProps {
-	imageUrl: string
+	imageUrl?: string
 }
 
-export function Header({ imageUrl }: HeaderProps) {
+const photoProfile = 'https://avatars.githubusercontent.com/u/54327441?v=4'
+
+export function Header({ imageUrl = photoProfile }: HeaderProps) {
 	const [userName, setUserName] = useState('')
 
 	useEffect(() => {
@@ -29,7 +31,7 @@ export function Header({ imageUrl }: HeaderProps) {
 				<Text style={styles.name}>{userName}</Text>
 			</View>
 
-			<Image source={imageUrl} style={styles.photo} />
+			<Image source={{ uri: imageUrl }} style={styles.photo} />
 
 		</View>
 	)

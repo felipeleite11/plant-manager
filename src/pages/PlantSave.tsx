@@ -1,29 +1,76 @@
-import React from 'react'
-import { Text, View, StyleSheet, Image } from 'react-native'
+import React, { useState } from 'react'
+import { Text, View, StyleSheet, Image, Platform, Alert, TouchableOpacity } from 'react-native'
 import { SvgFromUri } from 'react-native-svg'
-import { useRoute } from '@react-navigation/core'
+import { useNavigation, useRoute } from '@react-navigation/core'
+import { format, isBefore } from 'date-fns'
+import DateTimePicker, { Event as DateTimePickerEvent } from '@react-native-community/datetimepicker'
 
 import drop from '../assets/waterdrop.png'
+
 import { Button } from '../components/Button'
+
+import { PlantProps, savePlant } from '../libs/storage'
 
 import colors from '../styles/colors'
 import fonts from '../styles/fonts'
 
 interface Params {
-	plant: {
-		id: number,
-		name: string,
-		photo: string,
-		environments: string[],
-		about: string,
-		water_tips: string
-	}
+	plant: PlantProps
 }
 
 export function PlantSave() {
+	const { navigate } = useNavigation()
+
 	const { params } = useRoute()
 
 	const { plant } = params as Params
+
+	const [selectedTime, setSelectedTime] = useState<Date | null>(null)
+	const [showTimePicker, setShowTimePicker] = useState(Platform.OS === 'ios')
+
+	function handleChangeTime(_: DateTimePickerEvent, datetime: Date | undefined) {
+		if(Platform.OS === 'android') {
+			setShowTimePicker(old => !old)
+		}
+
+		if(datetime && isBefore(datetime, new Date())) {
+			setSelectedTime(new Date())
+			return Alert.alert('Este horário já passou.')
+		}
+
+		if(datetime) {
+			setSelectedTime(datetime)
+			setShowTimePicker(false)
+		}
+	}
+
+	// Android only
+	function handleOpenTimePicker() {
+		setShowTimePicker(old => !old)
+	}
+
+	async function handleSavePlant() {
+		if(!selectedTime) {
+			return Alert.alert('Primeiro selecione um horário para o lembrete.')
+		}
+
+		try {
+			await savePlant({
+				...plant,
+				dateTimeNotification: selectedTime
+			})
+
+			navigate('Confirmation', {
+				title: 'Tudo certo!',
+				subtitle: 'Fique tranquilo que sempre vamos lembrar você de cuidar da sua plantinha com bastante amor.',
+				buttonText: 'Ver minhas plantas',
+				nextScreen: 'MyPlants',
+				icon: '😁'
+			})
+		} catch {
+			Alert.alert('Não foi possível salvar a planta.')
+		}
+	}
 
 	return (
 		<View style={styles.container}>
@@ -55,11 +102,37 @@ export function PlantSave() {
 					</Text>
 				</View>
 
-				<Text style={styles.alert}>
+				<Text style={styles.helpText}>
 					Escolha o melhor horário para ser lembrado.
 				</Text>
 
-				<Button text="Cadastrar planta" onPress={() => {}} />
+				{showTimePicker && (
+					<DateTimePicker 
+						value={selectedTime || new Date()}
+						mode="time"
+						display="spinner"
+						onChange={handleChangeTime}
+					/>
+				)}
+
+				{Platform.OS === 'android' && (
+					<TouchableOpacity 
+						onPress={handleOpenTimePicker}
+						style={styles.timePickerButton}
+					>
+						<Text style={styles.timePickerText}>
+							{selectedTime ? format(selectedTime || new Date(), 'HH:mm') : `Definir horário`}
+						</Text>
+
+						{selectedTime && (
+							<Text style={styles.timePickerChangeText}>
+								Toque aqui para alterar
+							</Text>
+						)}
+					</TouchableOpacity>
+				)}
+
+				<Button text="Adicionar planta" onPress={handleSavePlant} />
 			</View>
 		</View>
 	)
@@ -74,7 +147,8 @@ const styles = StyleSheet.create({
 	header: {
 		flex: 1,
 		paddingHorizontal: 30,
-		paddingVertical: 50,
+		paddingTop: 50,
+		paddingBottom: 100,
 		alignItems: 'center',
 		justifyContent: 'center',
 		backgroundColor: colors.shape
@@ -92,9 +166,11 @@ const styles = StyleSheet.create({
 		fontSize: 17,
 		marginTop: 15
 	},
+
 	controller: {
 		backgroundColor: colors.white,
-		padding: 20
+		padding: 20,
+		flex: 1
 	},
 	tip: {
 		flexDirection: 'row',
@@ -117,11 +193,25 @@ const styles = StyleSheet.create({
 		color: colors.blue,
 		textAlign: 'justify'
 	},
-	alert: {
+	helpText: {
 		textAlign: 'center',
 		fontFamily: fonts.complement,
 		color: colors.heading,
+		fontSize: 12
+	},
+	timePickerButton: {
+		width: '100%',
+		alignItems: 'center',
+		paddingVertical: 20
+	},
+	timePickerText: {
+		color: colors.heading,
+		fontSize: 24,
+		fontFamily: fonts.text
+	},
+	timePickerChangeText: {
+		color: colors.heading,
 		fontSize: 12,
-		marginBottom: 5
+		fontFamily: fonts.text
 	}
 })

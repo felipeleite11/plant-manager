@@ -9,22 +9,15 @@ import fonts from '../styles/fonts'
 
 import api from '../services/api'
 
+import { PlantProps } from '../libs/Storage'
+
 import { EnvironmentButton } from '../components/EnvironmentButton'
 import { PlantCardPrimary } from '../components/PlantCardPrimary'
 import { Load } from '../components/Load'
 
-import photo from '../assets/user.png'
-
 interface EnvironmentProps {
 	key: string,
 	title: string
-}
-
-interface PlantProps {
-	id: number,
-	name: string,
-	photo: string,
-	environments: string[]
 }
 
 export function PlantSelect() {
@@ -120,7 +113,7 @@ export function PlantSelect() {
 	return (
 		<View style={styles.container}>
 			<View style={styles.header}>
-				<Header imageUrl={photo} />
+				<Header />
 
 				<Text style={styles.title}>
 					Em qual ambiente
@@ -162,7 +155,7 @@ export function PlantSelect() {
 					onEndReachedThreshold={0.1}
 					onEndReached={({ distanceFromEnd }) => { handleFetchMore(distanceFromEnd) }}
 					ListFooterComponent={
-						loadMore ?<ActivityIndicator color={colors.green} /> : <></>
+						loadMore ? <ActivityIndicator color={colors.green} /> : <></>
 					}
 				/>
 			</View>
@@ -194,8 +187,8 @@ const styles = StyleSheet.create({
 	},
 	environmentButtonsContainer: {
 		height: 44,
-		justifyContent: 'center',
-		margin: 32
+		margin: 32,
+		paddingRight: 60
 	},
 	plantListContainer: {
 		flex: 1,

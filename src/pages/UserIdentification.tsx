@@ -11,7 +11,6 @@ import fonts from '../styles/fonts'
 export function UserIdentification() {
 	const { navigate } = useNavigation()
 
-
 	const [isFocused, setIsFocused] = useState(false)
 	const [isFilled, setIsFilled] = useState(false)
 	const [name, setName] = useState<string>()
@@ -29,13 +28,23 @@ export function UserIdentification() {
 		setName(value)
 	}
 
-	function handleStart() {
-		if(!!name) {
-			AsyncStorage.setItem('@plantmanager:user', name)
+	async function handleStart() {
+		if(!name) {
+			return Alert.alert('Me diga seu nome, por favor. 🙄')
+		}
 
-			navigate('Confirmation')
-		} else {
-			Alert.alert('Me diga seu nome, por favor. 🙄')
+		try {
+			await AsyncStorage.setItem('@plantmanager:user', name)
+
+			navigate('Confirmation', {
+				title: `Prontinho, ${name}!`,
+				subtitle: 'Agora vamos começar a cuidar das suas plantinhas com muito cuidado.',
+				buttonText: 'Começar',
+				nextScreen: 'PlantSelect',
+				icon: '😁'
+			})
+		} catch {
+			Alert.alert('Não foi possível salvar seu nome. Verifique as permissões e tente novamente.')
 		}
 	}
 
