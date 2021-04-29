@@ -64,7 +64,7 @@ export function PlantSave() {
 				title: 'Tudo certo!',
 				subtitle: 'Fique tranquilo que sempre vamos lembrar você de cuidar da sua plantinha com bastante amor.',
 				buttonText: 'Ver minhas plantas',
-				nextScreen: 'MyPlants',
+				nextScreen: 'TabRoutes',
 				icon: '😁'
 			})
 		} catch {
@@ -132,7 +132,14 @@ export function PlantSave() {
 					</TouchableOpacity>
 				)}
 
-				<Button text="Adicionar planta" onPress={handleSavePlant} />
+				<Button 
+					text="Adicionar planta" 
+					onPress={handleSavePlant}
+					style={[
+						styles.submitButton,
+						selectedTime && { bottom: 35 }
+					]} 
+				/>
 			</View>
 		</View>
 	)
@@ -197,21 +204,26 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		fontFamily: fonts.complement,
 		color: colors.heading,
-		fontSize: 12
+		fontSize: 12,
+		bottom: 30
 	},
 	timePickerButton: {
 		width: '100%',
 		alignItems: 'center',
-		paddingVertical: 20
+		paddingVertical: 20,
+		bottom: 30
 	},
 	timePickerText: {
 		color: colors.heading,
-		fontSize: 24,
+		fontSize: 26,
 		fontFamily: fonts.text
 	},
 	timePickerChangeText: {
 		color: colors.heading,
 		fontSize: 12,
 		fontFamily: fonts.text
+	},
+	submitButton: {
+		bottom: 20
 	}
 })

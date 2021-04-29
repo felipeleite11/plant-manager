@@ -30,7 +30,7 @@ export function UserIdentification() {
 
 	async function handleStart() {
 		if(!name) {
-			return Alert.alert('Me diga seu nome, por favor. 🙄')
+			return Alert.alert('Me diga seu nome, por favor.')
 		}
 
 		try {
@@ -40,7 +40,7 @@ export function UserIdentification() {
 				title: `Prontinho, ${name}!`,
 				subtitle: 'Agora vamos começar a cuidar das suas plantinhas com muito cuidado.',
 				buttonText: 'Começar',
-				nextScreen: 'PlantSelect',
+				nextScreen: 'TabRoutes',
 				icon: '😁'
 			})
 		} catch {

@@ -1,4 +1,5 @@
-import React, { useContext } from 'react'
+import React, { useEffect } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
 import { 
 	Text,
@@ -18,6 +19,20 @@ import watering from '../assets/water.png'
 
 export function Welcome() {
 	const { navigate } = useNavigation()
+	
+	useEffect(() => {
+		async function loadStoredUserName() {
+			// await AsyncStorage.removeItem('@plantmanager:plants')
+
+			const user = await AsyncStorage.getItem('@plantmanager:user')
+			
+			if(user) {
+				navigate('TabRoutes')
+			}
+		}
+
+		loadStoredUserName()
+	}, [])
 
 	function handleStart() {
 		navigate('UserIdentification')

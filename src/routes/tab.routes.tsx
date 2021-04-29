@@ -1,13 +1,29 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import colors from '../styles/colors'
-import { PlantSelect } from '../pages/PlantSelect'
 import { MaterialIcons } from '@expo/vector-icons'
+
+import { PlantSelect } from '../pages/PlantSelect'
 import { MyPlants } from '../pages/MyPlants'
+
+import colors from '../styles/colors'
 
 const AppTab = createBottomTabNavigator()
 
-const AuthRoutes = () => {
+const TabRoutes: React.FC = () => {
+	// const [plantsLength, setPlantsLength] = useState<number>(0)
+
+	// useEffect(() => {
+	// 	async function loadPlantsLength() {
+	// 		const storagedPlants = await loadPlants()
+
+	// 		console.log(storagedPlants.length)
+
+	// 		setPlantsLength(storagedPlants.length)
+	// 	}
+
+	// 	loadPlantsLength()
+	// }, [])
+
 	return (
 		<AppTab.Navigator 
 			tabBarOptions={{
@@ -19,12 +35,13 @@ const AuthRoutes = () => {
 					justifyContent: 'flex-end'
 				}
 			}}
-			initialRouteName="Minhas plantas"
+			initialRouteName="MyPlants"
 		>
 			<AppTab.Screen
-				name="Nova planta"
+				name="NewPlant"
 				component={PlantSelect}
 				options={{
+					title: 'Nova planta',
 					tabBarIcon: ({ size, color }) => (
 						<MaterialIcons 
 							name="add-circle-outline"
@@ -36,20 +53,29 @@ const AuthRoutes = () => {
 			/>
 
 			<AppTab.Screen
-				name="Minhas plantas"
+				name="MyPlants"
 				component={MyPlants}
 				options={{
+					title: 'Minhas plantas',
 					tabBarIcon: ({ size, color }) => (
 						<MaterialIcons 
 							name="format-list-bulleted"
 							size={size}
 							color={color}
 						/>
-					)
+					),
+					// tabBarBadge: plantsLength > 0 ? plantsLength : undefined,
+					// tabBarBadgeStyle: badgeStyles,
+					unmountOnBlur: true
 				}}
 			/>
 		</AppTab.Navigator>
 	)
 }
 
-export default AuthRoutes
+const badgeStyles = {
+	backgroundColor: colors.green_light,
+	fontSize: 10
+}
+
+export default TabRoutes

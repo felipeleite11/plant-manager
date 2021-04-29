@@ -66,3 +66,11 @@ export async function loadPlants() : Promise<PlantProps[]> {
 		throw new Error(e)
 	}
 }
+
+export async function removeAllPlants() {
+	try {
+		await AsyncStorage.setItem('@plantmanager:plants', JSON.stringify([]))
+	} catch(e) {
+		throw new Error(e)
+	}
+}
