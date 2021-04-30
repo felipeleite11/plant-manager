@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { Text, View, StyleSheet, Image, FlatList, ActivityIndicator, TouchableOpacity, Alert } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+import { Text, View, StyleSheet, Image, FlatList, TouchableOpacity, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
 import { MaterialIcons } from '@expo/vector-icons'
 import { formatDistance } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
 import { Header } from '../components/Header'
-import { Load } from '../components/Load'
 import { PlantCardSecondary } from '../components/PlantCardSecondary'
 
 import colors from '../styles/colors'
@@ -14,68 +13,57 @@ import fonts from '../styles/fonts'
 
 import drop from '../assets/waterdrop.png'
 
-import { PlantProps, loadPlants, removeAllPlants } from '../libs/storage'
 import { Button } from '../components/Button'
+import { GlobalContext } from '../contexts/GlobalContext'
+import { PlantProps } from '../libs/storage'
 
 export function MyPlants() {
 	const { navigate } = useNavigation()
 
-	const [plants, setPlants] = useState<PlantProps[]>([])
-	const [loading, setLoading] = useState(true)
+	const { myPlants, removeAllPlants, removeAPlant } = useContext(GlobalContext)
+
 	const [nextWatered, setNextWatered] = useState<string>()
 
-	async function loadStoragedData() {
-		try {
-			const storagedPlants = await loadPlants()
-
-			if(storagedPlants.length) {
-				const nextTime = formatDistance(
-					new Date(storagedPlants[0].dateTimeNotification).getTime(),
-					new Date().getTime(),
-					{ locale: ptBR }
-				)
-
-				setNextWatered(`Não esqueça de regar a ${storagedPlants[0].name} às ${nextTime} horas.`)
-			}
-
-			setPlants(storagedPlants)
-			setLoading(false)
-		} catch {
-			Alert.alert('Ocorreu um erro ao listar suas plantas.')
-		}
-	}
-
 	useEffect(() => {
-		loadStoragedData()
+		if(myPlants.length) {
+			const nextTime = formatDistance(
+				new Date(myPlants[0].dateTimeNotification).getTime(),
+				new Date().getTime(),
+				{ locale: ptBR }
+			)
+
+			setNextWatered(`Não esqueça de regar a ${myPlants[0].name} às ${nextTime} horas.`)
+		}
 	}, [])
 
 	async function handleClearPlants() {
-		try {
-			await removeAllPlants()
-
-			loadStoragedData()
-
-			Alert.alert('Todas as plantas foram apagadas!')
-
-			navigate('TabRoutes')
-		} catch {
-			Alert.alert('Ocorreu um erro ao remover as plantas.')
-		}
+		await removeAllPlants()
 	}
 
 	function handleTabChange() {
 		navigate('NewPlant')
 	}
 
-	if(loading) {
-		return <Load />
+	async function handleRemove(plant: PlantProps) {
+		Alert.alert('Remover', `Deseja remover a planta ${plant.name}?`, [
+			{
+				text: 'Não',
+				style: 'cancel'
+			},
+			{
+				text: 'Sim',
+				onPress: async () => {
+					await removeAPlant(plant)
+				}
+			}
+		])
 	}
 
 	return (
 		<View style={styles.container}>
 			<Header />
 
-			{plants.length === 0 && !loading ? (
+			{myPlants.length === 0 ? (
 				<View style={styles.plantsEmptyArea}>
 					<Text style={styles.plantsEmptyEmoji}>
 						🍃
@@ -118,20 +106,17 @@ export function MyPlants() {
 							</TouchableOpacity>
 						</View>
 
-						{loading ? (
-							<ActivityIndicator color={colors.green} />
-						) : (
-							<FlatList
-								data={plants}
-								keyExtractor={item => String(item.id)}
-								renderItem={({ item }) => (
-									<PlantCardSecondary 
-										data={item}
-									/>
-								)}
-								showsVerticalScrollIndicator={false}
-							/>
-						)}
+						<FlatList
+							data={myPlants}
+							keyExtractor={item => String(item.id)}
+							renderItem={({ item }) => (
+								<PlantCardSecondary 
+									data={item}
+									handleRemove={() => { handleRemove(item) }}
+								/>
+							)}
+							showsVerticalScrollIndicator={false}
+						/>
 					</View>
 				</>
 			)}

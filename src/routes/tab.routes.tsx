@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { MaterialIcons } from '@expo/vector-icons'
 
@@ -7,22 +7,12 @@ import { MyPlants } from '../pages/MyPlants'
 
 import colors from '../styles/colors'
 
+import { GlobalContext } from '../contexts/GlobalContext'
+
 const AppTab = createBottomTabNavigator()
 
 const TabRoutes: React.FC = () => {
-	// const [plantsLength, setPlantsLength] = useState<number>(0)
-
-	// useEffect(() => {
-	// 	async function loadPlantsLength() {
-	// 		const storagedPlants = await loadPlants()
-
-	// 		console.log(storagedPlants.length)
-
-	// 		setPlantsLength(storagedPlants.length)
-	// 	}
-
-	// 	loadPlantsLength()
-	// }, [])
+	const { myPlants, currentTab } = useContext(GlobalContext)
 
 	return (
 		<AppTab.Navigator 
@@ -35,7 +25,7 @@ const TabRoutes: React.FC = () => {
 					justifyContent: 'flex-end'
 				}
 			}}
-			initialRouteName="MyPlants"
+			initialRouteName={currentTab}
 		>
 			<AppTab.Screen
 				name="NewPlant"
@@ -64,8 +54,8 @@ const TabRoutes: React.FC = () => {
 							color={color}
 						/>
 					),
-					// tabBarBadge: plantsLength > 0 ? plantsLength : undefined,
-					// tabBarBadgeStyle: badgeStyles,
+					tabBarBadge: myPlants.length,
+					tabBarBadgeStyle: badgeStyles,
 					unmountOnBlur: true
 				}}
 			/>

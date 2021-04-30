@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Text, View, StyleSheet, Image, Platform, Alert, TouchableOpacity } from 'react-native'
+import React, { useContext, useState } from 'react'
+import { Text, View, StyleSheet, Image, Platform, Alert, TouchableOpacity, ScrollView } from 'react-native'
 import { SvgFromUri } from 'react-native-svg'
 import { useNavigation, useRoute } from '@react-navigation/core'
 import { format, isBefore } from 'date-fns'
@@ -9,10 +9,11 @@ import drop from '../assets/waterdrop.png'
 
 import { Button } from '../components/Button'
 
-import { PlantProps, savePlant } from '../libs/storage'
+import { PlantProps } from '../libs/storage'
 
 import colors from '../styles/colors'
 import fonts from '../styles/fonts'
+import { GlobalContext } from '../contexts/GlobalContext'
 
 interface Params {
 	plant: PlantProps
@@ -22,6 +23,8 @@ export function PlantSave() {
 	const { navigate } = useNavigation()
 
 	const { params } = useRoute()
+
+	const { addPlant, setCurrentTab } = useContext(GlobalContext)
 
 	const { plant } = params as Params
 
@@ -55,10 +58,12 @@ export function PlantSave() {
 		}
 
 		try {
-			await savePlant({
+			await addPlant({
 				...plant,
 				dateTimeNotification: selectedTime
 			})
+
+			setCurrentTab('MyPlants')
 
 			navigate('Confirmation', {
 				title: 'Tudo certo!',
@@ -73,75 +78,80 @@ export function PlantSave() {
 	}
 
 	return (
-		<View style={styles.container}>
-			<View style={styles.header}>
-				<SvgFromUri 
-					uri={plant.photo}
-					height={150}
-					width={150}
-				/>
-
-				<Text style={styles.name}>
-					{plant.name}
-				</Text>
-
-				<Text style={styles.about}>
-					{plant.about}
-				</Text>
-			</View>
-
-			<View style={styles.controller}>
-				<View style={styles.tip}>
-					<Image 
-						source={drop}
-						style={styles.tipImage} 
+		<ScrollView
+			showsVerticalScrollIndicator={false}
+			contentContainerStyle={styles.container}
+		>
+			<View style={styles.container}>
+				<View style={styles.header}>
+					<SvgFromUri 
+						uri={plant.photo}
+						height={150}
+						width={150}
 					/>
 
-					<Text style={styles.tipText}>
-						{plant.water_tips}
+					<Text style={styles.name}>
+						{plant.name}
+					</Text>
+
+					<Text style={styles.about}>
+						{plant.about}
 					</Text>
 				</View>
 
-				<Text style={styles.helpText}>
-					Escolha o melhor horário para ser lembrado.
-				</Text>
+				<View style={styles.controller}>
+					<View style={styles.tip}>
+						<Image 
+							source={drop}
+							style={styles.tipImage} 
+						/>
 
-				{showTimePicker && (
-					<DateTimePicker 
-						value={selectedTime || new Date()}
-						mode="time"
-						display="spinner"
-						onChange={handleChangeTime}
-					/>
-				)}
-
-				{Platform.OS === 'android' && (
-					<TouchableOpacity 
-						onPress={handleOpenTimePicker}
-						style={styles.timePickerButton}
-					>
-						<Text style={styles.timePickerText}>
-							{selectedTime ? format(selectedTime || new Date(), 'HH:mm') : `Definir horário`}
+						<Text style={styles.tipText}>
+							{plant.water_tips}
 						</Text>
+					</View>
 
-						{selectedTime && (
-							<Text style={styles.timePickerChangeText}>
-								Toque aqui para alterar
+					<Text style={styles.helpText}>
+						Escolha o melhor horário para ser lembrado.
+					</Text>
+
+					{showTimePicker && (
+						<DateTimePicker 
+							value={selectedTime || new Date()}
+							mode="time"
+							display="spinner"
+							onChange={handleChangeTime}
+						/>
+					)}
+
+					{Platform.OS === 'android' && (
+						<TouchableOpacity 
+							onPress={handleOpenTimePicker}
+							style={styles.timePickerButton}
+						>
+							<Text style={styles.timePickerText}>
+								{selectedTime ? format(selectedTime || new Date(), 'HH:mm') : `Definir horário`}
 							</Text>
-						)}
-					</TouchableOpacity>
-				)}
 
-				<Button 
-					text="Adicionar planta" 
-					onPress={handleSavePlant}
-					style={[
-						styles.submitButton,
-						selectedTime && { bottom: 35 }
-					]} 
-				/>
+							{selectedTime && (
+								<Text style={styles.timePickerChangeText}>
+									Toque aqui para alterar
+								</Text>
+							)}
+						</TouchableOpacity>
+					)}
+
+					<Button 
+						text="Adicionar planta" 
+						onPress={handleSavePlant}
+						style={[
+							styles.submitButton,
+							selectedTime && { bottom: 35 }
+						]} 
+					/>
+				</View>
 			</View>
-		</View>
+		</ScrollView>
 	)
 }
 

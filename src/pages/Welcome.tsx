@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/core'
 import { 
@@ -12,6 +12,8 @@ import {
 } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
+import { GlobalContext } from '../contexts/GlobalContext'
+
 import colors from '../styles/colors'
 import fonts from '../styles/fonts'
 
@@ -19,14 +21,15 @@ import watering from '../assets/water.png'
 
 export function Welcome() {
 	const { navigate } = useNavigation()
+
+	const { userName } = useContext(GlobalContext)
 	
 	useEffect(() => {
 		async function loadStoredUserName() {
+			// await AsyncStorage.removeItem('@plantmanager:user')
 			// await AsyncStorage.removeItem('@plantmanager:plants')
 
-			const user = await AsyncStorage.getItem('@plantmanager:user')
-			
-			if(user) {
+			if(userName) {
 				navigate('TabRoutes')
 			}
 		}

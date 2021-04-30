@@ -1,15 +1,18 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigation } from '@react-navigation/core'
 import { Text, StyleSheet, SafeAreaView, View, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Platform, Keyboard, Alert } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { Button } from '../components/Button'
 
 import colors from '../styles/colors'
 import fonts from '../styles/fonts'
 
+import { GlobalContext } from '../contexts/GlobalContext'
+
 export function UserIdentification() {
 	const { navigate } = useNavigation()
+
+	const { setUser } = useContext(GlobalContext)
 
 	const [isFocused, setIsFocused] = useState(false)
 	const [isFilled, setIsFilled] = useState(false)
@@ -34,7 +37,7 @@ export function UserIdentification() {
 		}
 
 		try {
-			await AsyncStorage.setItem('@plantmanager:user', name)
+			await setUser(name)
 
 			navigate('Confirmation', {
 				title: `Prontinho, ${name}!`,
