@@ -54,7 +54,7 @@ const TabRoutes: React.FC = () => {
 							color={color}
 						/>
 					),
-					tabBarBadge: myPlants.length,
+					tabBarBadge: myPlants.length || undefined,
 					tabBarBadgeStyle: badgeStyles,
 					unmountOnBlur: true
 				}}

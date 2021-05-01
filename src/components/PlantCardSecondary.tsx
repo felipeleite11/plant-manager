@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons'
 import React from 'react'
-import { Text, StyleSheet, View, Animated } from 'react-native'
+import { Text, StyleSheet, View, Animated, Vibration } from 'react-native'
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { SvgFromUri } from 'react-native-svg'
@@ -30,36 +30,39 @@ export function PlantCardSecondary({ data, handleRemove, ...rest }: PlantProps) 
 						<Feather 
 							name="trash" 
 							size={32} 
-							color={colors.white} 
+							color={colors.white}
 						/>
 					</RectButton>
 				</Animated.View>
 			)}
+			onSwipeableWillOpen={() => { 
+				Vibration.vibrate(30) 
+			}}
 		>
-		<RectButton 
-			style={styles.container}
-			{...rest}
-		>
-			<SvgFromUri 
-				uri={data.photo} 
-				width={50} 
-				height={50} 
-			/>
+			<RectButton 
+				style={styles.container}
+				{...rest}
+			>
+				<SvgFromUri 
+					uri={data.photo} 
+					width={50} 
+					height={50} 
+				/>
 
-			<Text style={styles.text}>
-				{data.name}
-			</Text>
-
-			<View style={styles.details}>
-				<Text style={styles.timeLabel}>
-					Regar às
+				<Text style={styles.text}>
+					{data.name}
 				</Text>
 
-				<Text style={styles.time}>
-					{data.hour}
-				</Text>
-			</View>
-		</RectButton>
+				<View style={styles.details}>
+					<Text style={styles.timeLabel}>
+						Regar às
+					</Text>
+
+					<Text style={styles.time}>
+						{data.hour}
+					</Text>
+				</View>
+			</RectButton>
 		</Swipeable>
 	)
 }

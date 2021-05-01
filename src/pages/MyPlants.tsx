@@ -37,7 +37,20 @@ export function MyPlants() {
 	}, [])
 
 	async function handleClearPlants() {
-		await removeAllPlants()
+		Alert.alert('Remover', 'Deseja remover todas as suas plantas?', [
+			{
+				text: 'Não',
+				style: 'cancel'
+			},
+			{
+				text: 'Sim',
+				onPress: async () => {
+					await removeAllPlants()
+				}
+			}
+		])
+
+		
 	}
 
 	function handleTabChange() {
