@@ -11,6 +11,7 @@ import {
 	Dimensions 
 } from 'react-native'
 import { Feather } from '@expo/vector-icons'
+import * as Notification from 'expo-notifications'
 
 import { GlobalContext } from '../contexts/GlobalContext'
 
@@ -22,12 +23,16 @@ import watering from '../assets/water.png'
 export function Welcome() {
 	const { navigate } = useNavigation()
 
-	const { userName } = useContext(GlobalContext)
+	const { userName, setUser } = useContext(GlobalContext)
 	
 	useEffect(() => {
 		async function loadStoredUserName() {
 			// await AsyncStorage.removeItem('@plantmanager:user')
 			// await AsyncStorage.removeItem('@plantmanager:plants')
+
+			// await Notification.cancelAllScheduledNotificationsAsync()
+
+			// await setUser('Felipe')
 
 			if(userName) {
 				navigate('TabRoutes')
@@ -85,7 +90,6 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		fontSize: 32,
-		fontWeight: 'bold',
 		textAlign: 'center',
 		color: colors.heading,
 		marginTop: 38,

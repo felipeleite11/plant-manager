@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
 import { Text, View, StyleSheet, Image, Platform, Alert, TouchableOpacity, ScrollView } from 'react-native'
-import { SvgFromUri } from 'react-native-svg'
 import { useNavigation, useRoute } from '@react-navigation/core'
 import { format, isBefore } from 'date-fns'
 import DateTimePicker, { Event as DateTimePickerEvent } from '@react-native-community/datetimepicker'
@@ -84,10 +83,9 @@ export function PlantSave() {
 		>
 			<View style={styles.container}>
 				<View style={styles.header}>
-					<SvgFromUri 
-						uri={plant.photo}
-						height={150}
-						width={150}
+					<Image 
+						source={{ uri: plant.photo }}
+						style={styles.photo} 
 					/>
 
 					<Text style={styles.name}>
@@ -235,5 +233,10 @@ const styles = StyleSheet.create({
 	},
 	submitButton: {
 		bottom: 20
+	},
+	photo: {
+		width: 150, 
+		height: 150, 
+		borderRadius: 75
 	}
 })

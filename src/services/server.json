@@ -17,7 +17,7 @@
       "name": "Aningapara",
       "about": "É uma espécie tropical que tem crescimento rápido e fácil manuseio.",
       "water_tips": "Mantenha a terra sempre húmida sem encharcar. Regue 2 vezes na semana.",
-      "photo": "https://storage.googleapis.com/golden-wind/nextlevelweek/05-plantmanager/1.svg",
+      "photo": "https://flores.culturamix.com/blog/wp-content/uploads/2020/06/Planta-Comigo-Ningu%C3%A9m-Pode-no-Vaso.jpg",
       "environments": ["living_room", "kitchen"],
       "frequency": {
         "times": 2,
@@ -29,7 +29,7 @@
       "name": "Zamioculca",
       "about": "Apesar de florescer na primavera, fica o ano todo bonita e verdinha. ",
       "water_tips": "Utilize vasos com furos e pedras no fundo para facilitar a drenagem. Regue 1 vez no dia.",
-      "photo": "https://storage.googleapis.com/golden-wind/nextlevelweek/05-plantmanager/2.svg",
+      "photo": "https://cdn.leroymerlin.com.br/products/zamioculca_pote_17_89209890_0001_600x600.jpg",
       "environments": ["living_room", "bedroom"],
       "frequency": {
         "times": 1,
@@ -41,7 +41,7 @@
       "name": "Peperomia",
       "about": "Adapta-se tanto ao sol e sombra, mas prefere ficar num cantinho fresco, sem sol direto. ",
       "water_tips": "Nos dias mais quentes borrife água nas folhas. Regue 3 vezes na semana.",
-      "photo": "https://storage.googleapis.com/golden-wind/nextlevelweek/05-plantmanager/3.svg",
+      "photo": "https://cdn.awsli.com.br/600x450/1424/1424687/produto/58028188/81e6ac5792.jpg",
       "environments": ["bedroom"],
       "frequency": {
         "times": 3,
@@ -50,10 +50,10 @@
     },
     {
       "id": 4,
-      "name": "Imbé",
-      "about": "De médio porte que se adapta a diversas regiões, além de ser bem fácil de cultivar. Conquista cada vez mais pessoas.",
+      "name": "Bonsai",
+      "about": "Um bonsai precisa ter outros atributos além de simplesmente estar plantado num vaso raso e pequeno.",
       "water_tips": "Mantenha a terra sempre húmida sem encharcar. Regue 2 vezes na semana.",
-      "photo": "https://storage.googleapis.com/golden-wind/nextlevelweek/05-plantmanager/4.svg",
+      "photo": "https://w1.ezcdn.com.br/idealbonsai/fotos/zoom/12829fz1/bonsai-pitanga-15-anos.jpg",
       "environments": ["bedroom", "living_room"],
       "frequency": {
         "times": 2,
@@ -65,7 +65,7 @@
       "name": "Espada São Jorge",
       "about": "O aroma reduz os níveis de ansiedade e seu cheiro ajudar na qualidade do sono e a produtividade durante o dia.",
       "water_tips": "Regue o solo ao redor. Regue 1 vez no dia.",
-      "photo": "https://storage.googleapis.com/golden-wind/nextlevelweek/05-plantmanager/5.svg",
+      "photo": "https://www.extra-imagens.com.br/Control/ArquivoExibir.aspx?IdArquivo=1435216036",
       "environments": ["bedroom", "living_room"],
       "frequency": {
         "times": 1,
@@ -77,7 +77,7 @@
       "name": "Yucca",
       "about": "São indicadas pois são fáceis de manter e cuidar. Você colocar em pequenos vasos, ou até mesmo em xícaras.",
       "water_tips": "Graças à reserva de água dessas verdinhas, é sempre melhor regar pouco. Regue 1 vez na semana.",
-      "photo": "https://storage.googleapis.com/golden-wind/nextlevelweek/05-plantmanager/6.svg",
+      "photo": "https://a-static.mlcdn.com.br/1500x1500/planta-artificial-permanente-valence-yucca-120cm-valence-store/valencestore001/579210787/e065df7099042700c413b3a918a7dcd4.jpg",
       "environments": ["kitchen", "bedroom"],
       "frequency": {
         "times": 1,
@@ -86,10 +86,10 @@
     },
     {
       "id": 7,
-      "name": "Frutíferas",
+      "name": "Maranta",
       "about": "Exigem algumas horinhas de sol por dia, por isso deixe próximo a janelas.",
       "water_tips": "Regue sempre na terra e não as folhas. Regue 3 vezes na semana",
-      "photo": "https://storage.googleapis.com/golden-wind/nextlevelweek/05-plantmanager/7.svg",
+      "photo": "https://viveirogoias.com.br/wp-content/uploads/2019/09/MARANTA-TRICOLOR-POTE-17-600x600.jpg",
       "environments": ["kitchen", "living_room"],
       "frequency": {
         "times": 3,
@@ -101,7 +101,7 @@
       "name": "Orquídea",
       "about": "Traz sensação de tranquilidade e paz ao ambiente. Requer pouca manutenção e ótima para quem tem pouco espaço.",
       "water_tips": "Regue moderadamente. Reque 4 vezes na semana.",
-      "photo": "https://storage.googleapis.com/golden-wind/nextlevelweek/05-plantmanager/8.svg",
+      "photo": "https://www.agapanthus.com.br/loja/media/catalog/product/cache/1/image/988x988/9df78eab33525d08d6e5fb8d27136e95/s/-/s-cx-phal-rosa-claro.jpg",
       "environments": ["bathroom"],
       "frequency": {
         "times": 4,
@@ -113,7 +113,7 @@
       "name": "Violeta",
       "about": "Com flores delicadas. Elas são ótimas sugestões para decorar o banheiro. ",
       "water_tips": "Nada de molhar as flores e folhas. Regue o solo 2 vezes na semana.",
-      "photo": "https://storage.googleapis.com/golden-wind/nextlevelweek/05-plantmanager/3.svg",
+      "photo": "https://cdn.leroymerlin.com.br/products/violeta_pote_11_89203534_0001_600x600.jpg",
       "environments": ["bathroom"],
       "frequency": {
         "times": 2,
@@ -125,8 +125,56 @@
       "name": "Hortênsia",
       "about": "A hortênsia é uma planta rústica e se adapta a diferentes tipos de solos.",
       "water_tips": "Mantenha a terra sempre húmida sem encharcar. Regue 1 vez no dia.",
-      "photo": "https://storage.googleapis.com/golden-wind/nextlevelweek/05-plantmanager/2.svg",
+      "photo": "https://static.cloud-boxloja.com/lojas/9s0e9/produtos/91f8ba53-90ac-4358-9cc0-53b511c0f4db.jpg",
       "environments": ["bathroom"],
+      "frequency": {
+        "times": 1,
+        "repeat_every": "day"
+      }
+    },
+    {
+      "id": 11,
+      "name": "Samambaia",
+      "about": "A planta samambaia é ideal para decorar salas de estar, varandas, banheiros, cozinhas e hall de entrada.",
+      "water_tips": "Mantenha a terra sempre húmida sem encharcar. Regue 1 vez na semana.",
+      "photo": "https://static3.tcdn.com.br/img/img_prod/350075/samambaia_americana_8677_1_20190521161357.jpg",
+      "environments": ["bathroom", "living_room", "kitchen", "bedroom"],
+      "frequency": {
+        "times": 1,
+        "repeat_every": "week"
+      }
+    },
+    {
+      "id": 12,
+      "name": "Copo-de-leite",
+      "about": "É uma flor muito utilizada na ornamentação de casamentos e buquês de noivas, pois representa a pureza e a santidade na união matrimonial.",
+      "water_tips": "Mantenha a terra sempre húmida sem encharcar. Regue 1 vez na semana.",
+      "photo": "https://images.tcdn.com.br/img/img_prod/665384/copo_de_leite_60cm_32847901_1_20200511173715.jpg",
+      "environments": ["bedroom"],
+      "frequency": {
+        "times": 1,
+        "repeat_every": "week"
+      }
+    },
+    {
+      "id": 13,
+      "name": "Girassol",
+      "about": "É caracterizada por possuir grandes inflorescências.",
+      "water_tips": "Mantenha a terra sempre húmida sem encharcar. Regue 1 vez no dia.",
+      "photo": "http://d3ugyf2ht6aenh.cloudfront.net/stores/001/206/716/products/8322356490-oleo-de-girassol-100ml-5923a8af-05ccc91362e217e17415913310678446-640-0.jpg",
+      "environments": ["bedroom"],
+      "frequency": {
+        "times": 1,
+        "repeat_every": "day"
+      }
+    },
+    {
+      "id": 14,
+      "name": "Lambari",
+      "about": "É caracterizada por possuir grandes inflorescências.",
+      "water_tips": "Mantenha a terra sempre húmida sem encharcar. Regue 1 vez no dia.",
+      "photo": "https://cdn.awsli.com.br/600x450/41/41127/produto/18340842/948067a898.jpg",
+      "environments": ["bedroom"],
       "frequency": {
         "times": 1,
         "repeat_every": "day"
@@ -134,3 +182,5 @@
     }
   ]
 }
+
+

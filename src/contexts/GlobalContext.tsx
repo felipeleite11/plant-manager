@@ -68,10 +68,10 @@ export function GlobalContextProvider({ children }: GlobalContextProviderProps) 
 				}
 			])
 	
-			await StorageOperations.savePlant(plant)
-
 			console.log(`Adicionando planta: ${plant.name}`)
-		} catch {
+			
+			await StorageOperations.savePlant(plant)
+		} catch(e) {
 			Alert.alert('Erro ao adicionar planta.')
 		}
 	}
@@ -97,8 +97,6 @@ export function GlobalContextProvider({ children }: GlobalContextProviderProps) 
 			setMyPlants([])
 
 			console.log('Todas as plantas foram removidas.')
-			
-			Alert.alert('Todas as plantas foram apagadas!')
 		} catch {
 			Alert.alert('Ocorreu um erro ao remover as plantas.')
 		}

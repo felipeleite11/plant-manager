@@ -1,9 +1,8 @@
 import { Feather } from '@expo/vector-icons'
 import React from 'react'
-import { Text, StyleSheet, View, Animated, Vibration } from 'react-native'
+import { Text, StyleSheet, View, Animated, Vibration, Image } from 'react-native'
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
-import { SvgFromUri } from 'react-native-svg'
 
 import colors from '../styles/colors'
 import fonts from '../styles/fonts'
@@ -43,10 +42,9 @@ export function PlantCardSecondary({ data, handleRemove, ...rest }: PlantProps) 
 				style={styles.container}
 				{...rest}
 			>
-				<SvgFromUri 
-					uri={data.photo} 
-					width={50} 
-					height={50} 
+				<Image 
+					source={{ uri: data.photo }}
+					style={styles.photo} 
 				/>
 
 				<Text style={styles.text}>
@@ -110,5 +108,10 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		position: 'relative',
 		top: -14
+	},
+	photo: {
+		width: 54, 
+		height: 54, 
+		borderRadius: 27
 	}
 })

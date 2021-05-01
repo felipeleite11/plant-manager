@@ -1,6 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { format } from 'date-fns'
 
+import notification from './notification' 
+
 export interface PlantProps {
 	id: number
 	name: string
@@ -8,7 +10,7 @@ export interface PlantProps {
 	photo: string
 	environments: string[]
 	water_tips: string
-	frequence: {
+	frequency: {
 		times: number,
 		repeat_every: string
 	}
@@ -19,6 +21,7 @@ export interface PlantProps {
 export interface StoragePlantProps {
 	[id: string]: {
 		data: PlantProps
+		notificationId: string
 	}
 }
 
@@ -38,13 +41,16 @@ export default {
 			const data = await AsyncStorage.getItem('@plantmanager:plants')
 	
 			const oldPlants = data ? (JSON.parse(data) as StoragePlantProps) : {}
+
+			const notificationId = await notification.scheduleNotification(plant)
 	
 			const newPlant = {
 				[plant.id]: {
-					data: plant
+					data: plant,
+					notificationId
 				}
 			}
-	
+
 			await AsyncStorage.setItem('@plantmanager:plants', JSON.stringify({
 				...newPlant,
 				...oldPlants
@@ -81,14 +87,14 @@ export default {
 	async removePlant(plant: PlantProps) : Promise<void> {
 		try {
 			const data = await AsyncStorage.getItem('@plantmanager:plants')
+
+			const plants = data ? (JSON.parse(data) as StoragePlantProps) : {}
 	
-			const oldPlants = data ? (JSON.parse(data) as StoragePlantProps) : {}
-	
-			delete oldPlants[plant.id]
-	
-			console.log(`Restam ${Object.keys(oldPlants).length} plantas`)
-	
-			await AsyncStorage.setItem('@plantmanager:plants', JSON.stringify(oldPlants))
+			await notification.cancelScheduledNotificationAsync(plants[plant.id].notificationId)
+
+			delete plants[plant.id]
+
+			await AsyncStorage.setItem('@plantmanager:plants', JSON.stringify(plants))
 		} catch(e) {
 			throw new Error(e)
 		}
@@ -96,7 +102,15 @@ export default {
 	
 	async removePlants() {
 		try {
-			await AsyncStorage.setItem('@plantmanager:plants', JSON.stringify([]))
+			const data = await AsyncStorage.getItem('@plantmanager:plants')
+
+			const plants = data ? (JSON.parse(data) as StoragePlantProps) : {}
+
+			for(let { notificationId } of Object.values(plants)) {
+				await notification.cancelScheduledNotificationAsync(notificationId)
+			}
+
+			await AsyncStorage.setItem('@plantmanager:plants', JSON.stringify({}))
 		} catch(e) {
 			throw new Error(e)
 		}

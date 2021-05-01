@@ -49,8 +49,6 @@ export function MyPlants() {
 				}
 			}
 		])
-
-		
 	}
 
 	function handleTabChange() {

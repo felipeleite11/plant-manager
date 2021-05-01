@@ -4,6 +4,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 
 import { PlantSelect } from '../pages/PlantSelect'
 import { MyPlants } from '../pages/MyPlants'
+import { Platform, StyleSheet } from 'react-native'
 
 import colors from '../styles/colors'
 
@@ -20,10 +21,7 @@ const TabRoutes: React.FC = () => {
 				activeTintColor: colors.green,
 				inactiveTintColor: colors.heading,
 				labelPosition: 'beside-icon',
-				style: {
-					height: 64,
-					justifyContent: 'flex-end'
-				}
+				style: Platform.OS === 'ios' ? styles.tabBarIOS : styles.tabBarAndroid
 			}}
 			initialRouteName={currentTab}
 		>
@@ -55,7 +53,7 @@ const TabRoutes: React.FC = () => {
 						/>
 					),
 					tabBarBadge: myPlants.length || undefined,
-					tabBarBadgeStyle: badgeStyles,
+					tabBarBadgeStyle: styles.badge,
 					unmountOnBlur: true
 				}}
 			/>
@@ -63,9 +61,19 @@ const TabRoutes: React.FC = () => {
 	)
 }
 
-const badgeStyles = {
-	backgroundColor: colors.green_light,
-	fontSize: 10
-}
+const styles = StyleSheet.create({
+	tabBarAndroid: {
+		height: 64,
+		justifyContent: 'flex-end'
+	},
+	tabBarIOS: {
+		height: 88,
+		paddingVertical: 20
+	},
+	badge: {
+		backgroundColor: colors.green_light,
+		fontSize: 10
+	}
+})
 
 export default TabRoutes

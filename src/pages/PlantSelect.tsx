@@ -31,26 +31,31 @@ export function PlantSelect() {
 	const [page, setPage] = useState(1)
 	const [loadMore, setLoadMore] = useState(true)
 	const [loadedAll, setLoadedAll] = useState(false)
+	const [allowLoadNextPage, setAllowLoadNextPage] = useState(true)
 
 	async function fetchPlants() {
+		if(!allowLoadNextPage) {
+			return
+		}
+
 		const { data } = await api.get('plants', {
 			params: {
 				_sort: 'name',
 				_order: 'asc',
 				_page: page,
-				_limit: 8
+				_limit: 6
 			}
 		})
-
-		if(!data) {
+		
+		if(!data.length) {
 			setLoadedAll(true)
+			setLoadMore(false)
 		}
 
 		if(page > 1) {
-			setPlants(old => [...old, ...data])
+			setPlants(oldPlants => [...oldPlants, ...data])
 		} else {
 			setPlants(data)
-			setFilteredPlants(data)
 		}
 		
 		setLoading(false)
@@ -79,8 +84,16 @@ export function PlantSelect() {
 	}, [])
 
 	useEffect(() => {
+		setFilteredPlants(plants)
+	}, [plants])
+
+	useEffect(() => {
+		setAllowLoadNextPage(true)
+
 		fetchPlants()
-	}, [])
+
+		return () => { setAllowLoadNextPage(false) }
+	}, [page])
 
 	function handleEnvironmentSelect(environment: EnvironmentProps) {
 		setSelectedEnvironment(environment.key)
@@ -98,8 +111,7 @@ export function PlantSelect() {
 		}
 
 		setLoadMore(true)
-		setPage(old => old + 1)
-		fetchPlants()
+		setPage(page + 1)
 	}
 
 	function handlePlantSelect(plant: PlantProps) {
@@ -152,7 +164,7 @@ export function PlantSelect() {
 					)}
 					showsVerticalScrollIndicator={false}
 					numColumns={2}
-					onEndReachedThreshold={0.1}
+					onEndReachedThreshold={0.5}
 					onEndReached={({ distanceFromEnd }) => { handleFetchMore(distanceFromEnd) }}
 					ListFooterComponent={
 						loadMore ? <ActivityIndicator color={colors.green} /> : <></>
