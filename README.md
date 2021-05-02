@@ -1,7 +1,7 @@
 # Plant Manager
 
 <p align="center">
-	<img src="assets/icon.png" style="width: 140px; height: 140px" />
+	<img src="assets/icon.png" width="140" height="140" />
 </p>
 
 Este projeto implementa um aplicativo para orientação aos cuidadores de plantas. Aqui foram inseridos diversos conceitos de usabilidade e uso de alguns recursos do smartphone, como notificações, vibração e armazenamento offline.
@@ -48,11 +48,11 @@ Os conceitos aplicados neste projeto podem ser totalmente reaproveitados em outr
 ## 📲 Demonstração
 
 <p class="image-container">
-	<img src="screens/1.png" style="width: 140px; height: 280px" />
-	<img src="screens/2.png" style="width: 140px; height: 280px" />
-	<img src="screens/3.png" style="width: 140px; height: 280px" />
-	<img src="screens/4.png" style="width: 140px; height: 280px" />
-	<img src="screens/5.png" style="width: 140px; height: 280px" />
+	<img src="screens/1.png" width="140" height="280" />
+	<img src="screens/2.png" width="140" height="280" />
+	<img src="screens/3.png" width="140" height="280" />
+	<img src="screens/4.png" width="140" height="280" />
+	<img src="screens/5.png" width="140" height="280" />
 </p>
 
 <style>
